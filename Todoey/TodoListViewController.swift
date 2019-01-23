@@ -10,7 +10,7 @@ import UIKit
 
 class TodoListViewController: UITableViewController {
 
-    let itemArray = ["Prendi mele", "Vai dal Gommista", "Telefona a Paolo"]
+    var itemArray : [String] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,7 +18,7 @@ class TodoListViewController: UITableViewController {
     }
 
 
-    //MARK - TableView Datasource Methods
+    //MARK: TableView Datasource Methods
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return itemArray.count
@@ -32,7 +32,7 @@ class TodoListViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(itemArray[indexPath.row])
+        //print(itemArray[indexPath.row])
         
         if tableView.cellForRow(at: indexPath)?.accessoryType == .checkmark {
             tableView.cellForRow(at: indexPath)?.accessoryType = .none
@@ -42,6 +42,38 @@ class TodoListViewController: UITableViewController {
         
         tableView.deselectRow(at: indexPath, animated: true)
     }
+    
+    //MARK: Add New Items
+    
+    @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
+        
+        //Creo la variabile di testo che mi permette di recuperare ciò che viene scritto nel campo di testo e ampliare lo "scope" che sarebbe limitato alla closure dove è digitato
+        var textField = UITextField()
+        
+        //Creiamo l'Alert
+        let alert = UIAlertController(title: "Add New Todoey Item", message: "", preferredStyle: .alert)
+        
+        //Aggiungiamo l'Azione
+        let action = UIAlertAction(title: "Add Item", style: .default) {
+            (action) in
+            //Aggiungo il testo che ho scritto nel campo di testo alla variabile con "scope" maggiore all'Array con le varie items"
+            self.itemArray.append(textField.text!)
+            
+            //Aggiorno la vista della TableView
+            self.tableView.reloadData()
+        }
+        
+        //Aggiungiamo il textField all'Alert
+        alert.addTextField { (alertTextField) in
+            alertTextField.placeholder = "Create new item"
+            textField = alertTextField
+        }
+        
+        //Aggiungiamo il bottone sopra creato alla finestra di Alert
+        alert.addAction(action)
+        present(alert, animated: true, completion: nil)
+    }
+    
     
 }
 
