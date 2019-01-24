@@ -12,9 +12,16 @@ class TodoListViewController: UITableViewController {
 
     var itemArray : [String] = []
     
+    let defaults = UserDefaults.standard
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        //Carico l'array prendendo i dati dall'UserDefaults
+        if let items = defaults.array(forKey:  "TodoListArray") as? [String] {
+            itemArray = items
+        }
     }
 
 
@@ -58,6 +65,9 @@ class TodoListViewController: UITableViewController {
             (action) in
             //Aggiungo il testo che ho scritto nel campo di testo alla variabile con "scope" maggiore all'Array con le varie items"
             self.itemArray.append(textField.text!)
+            
+            //Salvo i dati nel UserDefault
+            self.defaults.set(self.itemArray, forKey: "TodoListArray")
             
             //Aggiorno la vista della TableView
             self.tableView.reloadData()
