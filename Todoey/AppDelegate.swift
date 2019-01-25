@@ -17,9 +17,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
-        //Test per vedere dove i file sono salvati (SandBox)
-        print(NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true) .last! as String)
-        
         return true
     }
 
